@@ -1,0 +1,71 @@
+{% extends 'books/base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% block content %}
+    <nav class="navbar navbar-light bg-light">
+            <form class="form-inline" action="{% url 'books:search_title' %}" method="GET" >
+                <input class="form-control mr-sm-2" type="search"  name="q" placeholder="Look for title" >
+                <button type="submit">Search</button>
+            </form>
+            <form class="form-inline" action="{% url 'books:search_author' %}" method="GET" >
+                <input class="form-control mr-sm-2" type="search"  name="q" placeholder="Look for author" >
+                <button type="submit">Search</button>
+            </form>
+            <form class="form-inline" action="{% url 'books:search_date' %}" method="GET" >
+                <input class="form-control mr-sm-2" type="number"
+                       name="date_one"  placeholder="From year" style="width:8em;">
+                <input class="form-control mr-sm-2" type="number"
+                       name="date_two" placeholder="To year" style="width:8em;">
+                <button type="submit">Search</button>
+            </form>
+            <form class="form-inline" action="{% url 'books:search_language' %}" method="GET">
+            <!-- <label class="" for="inlineFormCustomSelect">Languages:</label> -->
+            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" method="GET" name="q">
+                <option selected>Language</option>
+                {% for lang in languages %}
+                <option value="{{ lang.0 }}">{{ lang.1 }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Select</button>
+            </form>
+    </nav>
+<br>
+<div class="container">
+    <div class="jumbotron">
+            <div class="row">
+            {% for book in books %}
+                <div class="col-4" style="margin-top: 3em;">
+                    <h2>{{ book.title }}</h2>
+                    <img src="{{ book.imageLinks.thumbnail}}">
+                    <ul class="list-group list-group-flush">
+                    <li class="list-group-item list-group-item-primary">Authors:</li>
+
+                        {% for author in book.authors.all %}
+                        <li class="list-group-item list-group-item-secondary">{{ author.name }}</li>
+                        {% endfor %}
+
+                    <li class="list-group-item list-group-item-dark">Published: {{ book.publishedDate }}</li>
+                    <li class="list-group-item list-group-item-dark">Pages: {{ book.pageCount }}</li>
+                    <li class="list-group-item list-group-item-dark">Language: {{ book.language }}</li>
+                    <li class="list-group-item list-group-item-dark">ISBN:</li>
+
+                        {% for id in book.industryIdentifiers.all %}
+                        <li class="list-group-item list-group-item-secondary">{{ id.type }}: {{ id.identifier }}</li>
+                        {% endfor %}
+                     </ul>
+                    <li class="list-group-item list-group-item-dark"><span>Small Thumbnail</span>
+                        <img src="{{ book.imageLinks.smallThumbnail }}" style="width:3em; height:3em;"></li>
+                </div>
+            {% empty %}
+                <h2>No books to show</h2>
+            {% endfor %}
+            </div>
+        <div style="padding-top:2em;">
+        {% include 'books/pagination.html' with page=page_obj %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

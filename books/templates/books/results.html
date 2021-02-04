@@ -1,0 +1,29 @@
+{% extends 'books/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+    <h1>Search Results:</h1>
+    <form method="post" action="{% url 'books:googleapi' %}">
+        {% csrf_token %}
+        <input type="hidden" name="Keyword" value="{{ query }}">
+        <div class="row">
+        {% for book in results %}
+          <div class="col-4" style="margin-top: 3em;">
+          <img src="{{ book.imageLinks.thumbnail }}" alt="{% static 'images/no-image.jpeg' %}">
+          <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="boxes" value="{{ forloop.counter0 }}" id="{{ forloop.counter0 }}">
+              <label class="form-check-label" for="{{ forloop.counter0 }}">
+                  {{ book.title }} by {{ book.authors }}
+              </label>
+          </div>
+          <br>
+          </div>
+        {% endfor %}
+        </div>
+        <input type="submit" class="btn btn-primary" value="Save in Database">
+    </form>
+    </div>
+</div>
+{% endblock %}
+

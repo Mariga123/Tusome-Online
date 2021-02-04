@@ -1,0 +1,14 @@
+{% extends 'books/base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="jumbotron">
+    <form action="#" method="post" >
+        {% csrf_token %}
+        {% bootstrap_form author_form %}
+        {% bootstrap_form book_form %}
+        {% bootstrap_form isbn_10_form %}
+        {% bootstrap_form image_form %}
+        <input type="submit" value="Add book">
+    </form>
+</div>
+{% endblock %}
