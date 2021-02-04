@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config,Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -128,15 +129,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# STATIC_URL = '/static/'
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static"),
-# ]
-
 STATIC_URL = '/static/'
-ENV_PATH = os.path.abspath(os.path.dirname(__file__))
-STATIC_ROOT = os.path.join(ENV_PATH, '../public/static/') 
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-
-GOOGLE_API_URL  = 'https://www.googleapis.com/books/v1'
-GOOGLE_API_KEY = 'AIzaSyAOzklVGuKFdB6peu-iU9kjwJ1B5RGayWQ'
+GOOGLE_BOOKS_API_KEY = config('GOOGLE_API_KEY')
+GOOGLE_BOOKS_URL  = config('GOOGLE_API_URL')
