@@ -98,8 +98,8 @@ def book_form_view(request):
 
 def search_google_view(request):
 
-    key = getattr(settings, 'GOOGLE_API_KEY', None)
-    url = getattr(settings, 'GOOGLE_API_URL', None)
+    key = getattr(settings, 'GOOGLE_BOOKS_API_KEY', None)
+    url = getattr(settings, 'GOOGLE_BOOKS_URL', None)
 
     query = request.GET['Keyword'] if request.method == 'GET' else request.POST['Keyword']
 
