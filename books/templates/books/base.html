@@ -12,7 +12,7 @@
         <div class="navbar-nav">
             <a class="nav-item nav-link" href="{% url 'books:books_list' %}">All books</a>
             <a class="nav-item nav-link" href="{% url 'books:add_book' %}">Add book</a>
-            <!-- <a class="nav-item nav-link" href="/api/books">REST Framework</a> -->
+            <a class="nav-item nav-link" href="/api/books">REST Framework</a>
             <form class="form-inline" action="{% url 'books:googleapi' %}" method="GET" >
                 <label for="googleapi" style="color:white; padding-left: 2em; padding-right: 1em;">Search in Google Books</label>
                 <input class="form-control mr-sm-2" type="search"  name="Keyword" placeholder="keyword" id="googleapi">
